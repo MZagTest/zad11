@@ -8,6 +8,7 @@ const gallery = document.querySelector('.gallery');
 const form = document.querySelector('#search-form');
 const btnMore = document.querySelector('.load-more');
 const btnLoop = document.querySelector('.loop-btn');
+let page = 1;
 
 const fetchPhotos = async (name, page) => {
   try {
@@ -25,7 +26,5 @@ const fetchPhotos = async (name, page) => {
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  actualPage = 1;
-  gallery.innerHTML = '';
-  fetchPhotos(form.searchQuery.value, actualPage);
+  fetchPhotos(form.searchQuery.value, page);
 });
