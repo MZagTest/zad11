@@ -16,7 +16,7 @@ let amount = 40;
 
 const fetchPhotos = async (name, page) => {
   try {
-    const respone = await axios(
+    const respone = await axios.get(
       `https://pixabay.com/api/?key=${THEKEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
     );
     const photos = await respone.data;
