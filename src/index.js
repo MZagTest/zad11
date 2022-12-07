@@ -14,35 +14,36 @@ const THEKEY = '31673863-7b4e2329a784886b2ded53b03&';
 let page = 1;
 let amount = 40;
 
-// const fetchPhotos = async (name, page) => {
-//   try {
-//     const respone = await axios(
-//       `https://pixabay.com/api/?key=${THEKEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
-//     );
-//     const photos = await respone.data;
-//     console.log(photos);
-//     // checkResults(photos);
-//   } catch (error) {
-//     console.log(error.message);
-//     Notiflix.Notify.failure(error.message);
-//   }
-// };
-
-const fetchPicture = async name => {
-  const parsedName = name.trim();
-  if (parsedName.length === 0) return;
+const fetchPhotos = async (name, page) => {
   try {
     const respone = await axios(
-      `https://pixabay.com/api/?key=${THEKEY}&q=${parsedName}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
+      `https://pixabay.com/api/?key=${THEKEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
     );
     const photos = await respone.data;
     console.log(photos);
     finishFetchingThing(photos);
+    // checkResults(photos);
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(error.message);
   }
 };
+
+// const fetchPicture = async name => {
+//   const parsedName = name.trim();
+//   if (parsedName.length === 0) return;
+//   try {
+//     const respone = await axios(
+//       `https://pixabay.com/api/?key=${THEKEY}&q=${parsedName}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
+//     );
+//     const photos = await respone.data;
+//     console.log(photos);
+//     finishFetchingThing(photos);
+//   } catch (error) {
+//     console.log(error.message);
+//     Notiflix.Notify.failure(error.message);
+//   }
+// };
 
 const finishFetchingThing = response => {
   if (response.hits.length === 0) {
@@ -61,7 +62,7 @@ const finishFetchingThing = response => {
 const createImageLoader = () => {
   return (
     (page += 1),
-    fetchPicture(input.value),
+    fetchPhotos(input.value),
     // console.log(`Loaded images from page ${page - 1}`),
     (loader.style.visibility = 'visible')
   );
@@ -115,14 +116,15 @@ const renderImages = res => {
 //   fetchPhotos(form.searchQuery.value, page);
 // });
 
-const observer = new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting) return;
-  createImageLoader();
-});
+// const observer = new IntersectionObserver(([entry]) => {
+//   if (!entry.isIntersecting) return;
+//   createImageLoader();
+// });
 
 form.addEventListener('submit', e => {
+  div.innerHTML = '';
   e.preventDefault();
-  fetchPicture(input.value);
+  fetchPhotos(input.value);
 });
 
-observer.observe(loader);
+// observer.observe(loader);
